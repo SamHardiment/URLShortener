@@ -16,7 +16,7 @@ migrate = Migrate(app, db)
 CORS(app)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def home():
     return render_template('home.html', title="Home")
 
