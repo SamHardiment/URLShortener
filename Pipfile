@@ -15,3 +15,7 @@ flask-migrate = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+dev = "bash -c \"export FLASK_ENV='development' && flask run\""
+start = "gunicorn app:app"

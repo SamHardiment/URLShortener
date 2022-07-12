@@ -5,8 +5,10 @@ from flask_cors import CORS
 import os
 
 
-##  Code block to connect sql db to heroku
+## app :)
+app = Flask(__name__)
 
+##  Code block to connect sql db to heroku
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -16,7 +18,7 @@ CORS(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    return render_template('home.html', title="Home")
 
 
 if __name__ == "__main__":
