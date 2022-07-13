@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from werkzeug import exceptions
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
