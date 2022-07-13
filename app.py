@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 ## Required for shorten_url func
 import string
+import random
 import os
 
 
@@ -19,7 +20,7 @@ migrate = Migrate(app, db)
 CORS(app)
 
 
-class Urllist(db.Model):
+class Urls(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     long_url = db.Column("long_url", db.String(255))
     short_url = db.Column("short_url", db.String(50))
@@ -37,7 +38,7 @@ def shorten_url():
         # k is an integer that defines the length of the returned list
         random_string = random.choices(random_seqeuence, k=6)
         random_string = "".join(random_string)
-        old_short_url = Urllist.query.filter_by(short_url=rand_letters).first()
+        old_short_url = Urls.query.filter_by(short_url=random_string).first()
         if not old_short_url:
             return random_string
 
@@ -48,18 +49,18 @@ def home():
         url_input = request.form['urlInput']
 
         # Check if long url exists in db
-        check_url = Urllist.query.filter_by(long_url=url_input).first()
+        check_url = Urls.query.filter_by(long_url=url_input).first()
         print(check_url)
         if check_url:
             #Redirect to url display of the long url and short url
-            return redirect(url_for("short_url_handle", url=found_url.short_url), title="Short Url")
+            return redirect(url_for("short_url_handle", url=check_url.short_url), title="Short Url")
         else:
             short_url = shorten_url()
-            # below adds long url and short url to the model
+            # add both urls to the model
             new_url_set = Urls(url_input, short_url)
-            # below adds new_url to the db
+            # add new_url to the db
             db.session.add(new_url_set)
-            # below saves the data
+            # saves the data
             db.session.commit()
             # redirect to webste
             return redirect(url_for("short_url_handle", url=short_url, title="Short Url"))
@@ -68,9 +69,9 @@ def home():
 
 @app.route('/<url>')
 def short_url_handle(url):
-    url = Urllist.query.filter_by(short_url=url).first()
+    data_url = Urls.query.filter_by(short_url=url).first()
     print(url)
-    return redirect(url.long_url)
+    return redirect(data_url.long_url)
 
 ############# ERROR STUFF
 
