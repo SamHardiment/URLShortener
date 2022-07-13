@@ -1,8 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, request, render_template, url_for, redirect
 from werkzeug import exceptions
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
+## Required for shorten_url func
+import string
 import os
 
 
@@ -19,15 +21,55 @@ CORS(app)
 
 class Urls(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
-    long_url = db.Column("long_url", db.String())
-    short_url = db.Column("short_url", db.String())
+    long_url = db.Column("long_url", db.String(255))
+    short_url = db.Column("short_url", db.String(50))
+
+    def __init__(self, long_url, short_url):
+        self.url = long_url
+        self.short_url = short_url
+
+## Function for shortening url - hence the obvs function name
+def shorten_url():
+    # string.ascii_lowercase = abcdefghijklmnopqrstuvwxyz
+    random_seqeuence = string.ascii_lowercase + string.digits
+    while True:
+        # random.choices is a method that reeturns a list wth randomly selected elements from a specifiied seqeuence
+        # k is an integer that defines the length of the returned list
+        random_string = random.choices(random_seqeuence, k=6)
+        random_string = "".join(random_string)
+        old_short_url = Urls.query.filter_by(short_url=rand_letters).first()
+        if not old_short_url:
+            return random_string
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == "POST":
+        url_input = request.form['urlInput']
+
+        # Check if long url exists in db
+        check_url = Urls.query.filter_by(long_url=url_input).first()
+        print(check_url)
+        if check_url:
+            #Redirect to url display of the long url and short url
+            return redirect(url_for("short_url_handle", url=found_url.short_url), title="Short Url")
+        else:
+            short_url = shorten_url()
+            # below adds long url and short url to the model
+            new_url_set = Urls(url_input, short_url)
+            # below adds new_url to the db
+            db.session.add(new_url_set)
+            # below saves the data
+            db.session.commit()
+            # redirect to webste
+            return redirect(url_for("short_url_handle", url=short_url, title="Short Url"))
+    else:
     return render_template('home.html', title="Home")
 
-
+@app.route('/<url>')
+def short_url_handle(url):
+    url = Urls.query.filter_by(short_url=url).first()
+    return redirect(url.long_url)
 
 ############# ERROR STUFF
 

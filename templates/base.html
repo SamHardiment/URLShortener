@@ -14,11 +14,12 @@
   <body>
     <nav class="navbar navbar-light bg-light justify-content-between">
       <a class="navbar-brand" href="{{url_for('home')}}">Home</a>
-      <form class="form-inline">
+      <form class="form-inline" action="#" method="POST">
         <label for="urlInput">Shorten your URL!</label>
         <input
           type="text"
           class="form-control"
+          name="urlInput"
           id="urlInput"
           aria-describedby="urlInput"
           placeholder="Enter URL"
