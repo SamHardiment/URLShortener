@@ -54,11 +54,11 @@ def home():
 
         ## If search bar takes short url, redirct to that page
         if check_small_url:
-            return redirect(url_for("short_url_handle", url=check_small_url.short_url, link=f'http://localhost:5000/{check_small_url.short_url}'))
+            return redirect(url_for("short_url_handle", url=check_small_url.short_url, link=f'https://url-but-short.herokuapp.com/{check_small_url.short_url}'))
 
         ## Redirect to url display of the long url and short url
         if check_url:
-            return redirect(url_for("short_url_display_handle", url=check_url.short_url, link=f'http://localhost:5000/{check_url.short_url}'))
+            return redirect(url_for("short_url_display_handle", url=check_url.short_url, link=f'https://url-but-short.herokuapp.com/{check_url.short_url}'))
 
         ## create url and redirect to display of the long url and short url
         else:
