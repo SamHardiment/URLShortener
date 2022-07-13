@@ -1,14 +1,16 @@
 {% extends "base.html"%} {% block title %}{{title}}{% endblock %} {% block
 content %}
-<section style="width: 50%; margin: auto">
-  <h1>Your new URL -- but short :D</h1>
-  <p>{{data.long_url}}</p>
-  <p>is now:</p>
-  <a href="{{link}}">{{data.short_url}}</a>
+<div
+  class="my-5 w-50 mx-auto d-flex flex-column justify-content-center align-items-center"
+>
+  <h1 class="mt-2">Your new URL -- but short :D</h1>
+  <p class="mt-5 fs-2 fw-italic">{{data.long_url}}</p>
+  <p class="fs-2 fw-bold">is now:</p>
+  <a class="fs-4" href="{{link}}">{{data.short_url}}</a>
   <br />
   <br />
   <a href="{{url_for('home')}}"
     >Return home to use the search bar, under maintenance on this route</a
   >
-</section>
+</div>
 {% endblock %}
