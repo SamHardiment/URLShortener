@@ -9,6 +9,10 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/css/index.css') }}"
+    />
     <title>UrlButShorter | {% block title %}{% endblock title %}</title>
   </head>
   <body>
@@ -29,7 +33,7 @@
       </form>
     </nav>
     <main>{% block content %} {% endblock %}</main>
-    <footer class="bg-light text-center text-lg-start">
+    <footer class="bg-light text-center text-lg-start footer_unique">
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
         © 2022 Copyright:
         <a class="text-dark" href="{{url_for('home')}}">Sam&Amir</a>
