@@ -6,8 +6,20 @@
     <title>UrlButShorter | {% block title %}{% endblock title %}</title>
   </head>
   <body>
-    <nav>
-      <a href="{{url_for('home')}}">Home</a>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <a class="navbar-brand" href="{{url_for('home')}}">Home</a>
+      <form class="form-inline">
+        <label for="urlInput">Shorten your URL!</label>
+        <input
+          type="text"
+          class="form-control"
+          id="urlInput"
+          aria-describedby="urlInput"
+          placeholder="Enter email"
+        />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </nav>
     <main>{% block content %} {% endblock %}</main>
     <footer>&copy; Sam&Amir</footer>

@@ -22,6 +22,7 @@ def home():
     return render_template('home.html', title="Home")
 
 
+
 ############# ERROR STUFF
 
 @app.errorhandler(exceptions.NotFound)
