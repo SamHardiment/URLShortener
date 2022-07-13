@@ -19,13 +19,13 @@ migrate = Migrate(app, db)
 CORS(app)
 
 
-class Urls(db.Model):
+class Urllist(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     long_url = db.Column("long_url", db.String(255))
     short_url = db.Column("short_url", db.String(50))
 
     def __init__(self, long_url, short_url):
-        self.url = long_url
+        self.long_url = long_url
         self.short_url = short_url
 
 ## Function for shortening url - hence the obvs function name
@@ -37,7 +37,7 @@ def shorten_url():
         # k is an integer that defines the length of the returned list
         random_string = random.choices(random_seqeuence, k=6)
         random_string = "".join(random_string)
-        old_short_url = Urls.query.filter_by(short_url=rand_letters).first()
+        old_short_url = Urllist.query.filter_by(short_url=rand_letters).first()
         if not old_short_url:
             return random_string
 
@@ -48,7 +48,7 @@ def home():
         url_input = request.form['urlInput']
 
         # Check if long url exists in db
-        check_url = Urls.query.filter_by(long_url=url_input).first()
+        check_url = Urllist.query.filter_by(long_url=url_input).first()
         print(check_url)
         if check_url:
             #Redirect to url display of the long url and short url
@@ -64,11 +64,12 @@ def home():
             # redirect to webste
             return redirect(url_for("short_url_handle", url=short_url, title="Short Url"))
     else:
-    return render_template('home.html', title="Home")
+        return render_template('home.html', title="Home")
 
 @app.route('/<url>')
 def short_url_handle(url):
-    url = Urls.query.filter_by(short_url=url).first()
+    url = Urllist.query.filter_by(short_url=url).first()
+    print(url)
     return redirect(url.long_url)
 
 ############# ERROR STUFF
