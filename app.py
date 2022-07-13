@@ -50,10 +50,17 @@ def home():
 
         # Check if long url exists in db
         check_url = Urls.query.filter_by(long_url=url_input).first()
-        print(check_url)
+        check_small_url = Urls.query.filter_by(short_url=url_input).first()
+
+        ## If search bar takes short url, redirct to that page
+        if check_small_url:
+            return redirect(url_for("short_url_handle", url=check_small_url.short_url, link=f'http://localhost:5000/{check_small_url.short_url}'))
+
+        ## Redirect to url display of the long url and short url
         if check_url:
-            #Redirect to url display of the long url and short url
-            return redirect(url_for("short_url_handle", url=check_url.short_url), title="Short Url")
+            return redirect(url_for("short_url_display_handle", url=check_url.short_url, link=f'http://localhost:5000/{check_url.short_url}'))
+
+        ## create url and redirect to display of the long url and short url
         else:
             short_url = shorten_url()
             # add both urls to the model
@@ -63,15 +70,21 @@ def home():
             # saves the data
             db.session.commit()
             # redirect to webste
-            return redirect(url_for("short_url_handle", url=short_url, title="Short Url"))
+            return redirect(url_for("short_url_display_handle", url=short_url))
     else:
         return render_template('home.html', title="Home")
 
 @app.route('/<url>')
 def short_url_handle(url):
     data_url = Urls.query.filter_by(short_url=url).first()
-    print(url)
     return redirect(data_url.long_url)
+
+
+@app.route('/display/<url>')
+def short_url_display_handle(url):
+    data_url = Urls.query.filter_by(short_url=url).first()
+    return render_template('url_display.html', data=data_url, title="Short Url")
+
 
 ############# ERROR STUFF
 

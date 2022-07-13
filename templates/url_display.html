@@ -1,0 +1,14 @@
+{% extends "base.html"%} {% block title %}{{title}}{% endblock %} {% block
+content %}
+<section style="width: 50%; margin: auto">
+  <h1>Your new URL -- but short :D</h1>
+  <p>{{data.long_url}}</p>
+  <p>is now:</p>
+  <a href="{{link}}">{{data.short_url}}</a>
+  <br />
+  <br />
+  <a href="{{url_for('home')}}"
+    >Return home to use the search bar, under maintenance on this route</a
+  >
+</section>
+{% endblock %}
