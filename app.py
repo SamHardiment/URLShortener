@@ -21,5 +21,23 @@ def home():
     return render_template('home.html', title="Home")
 
 
+############# ERROR STUFF
+
+@app.errorhandler(exceptions.NotFound)
+def handle_404(err):
+    return render_template('errors/404.html', title="404 Error"), 404
+
+@app.errorhandler(exceptions.BadRequest)
+def handle_400(err):
+    return render_template('errors/400.html', title="400 Error"), 400
+
+@app.errorhandler(exceptions.MethodNotAllowed)
+def handle_405(err):
+    return render_template('errors/405.html', title="405 Error"), 405
+
+@app.errorhandler(exceptions.InternalServerError)
+def handle_500(err):
+    return render_template('errors/500.html', title="500 Error"), 500
+
 if __name__ == "__main__":
     app.run(debug=True)
