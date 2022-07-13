@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% block title %}{{title}}{% endblock %} {% block
+content %}
+<h1>Oops!</h1>
+<p id="about">
+  We couldn't find what you were looking for!
+  <a href="{{url_for('home')}}">head home?</a>
+</p>
+{% endblock %}
