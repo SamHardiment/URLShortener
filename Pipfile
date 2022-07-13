@@ -11,6 +11,7 @@ flask-sqlalchemy = "*"
 psycopg2 = "*"
 flask-migrate = "*"
 werkzeug = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

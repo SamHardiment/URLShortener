@@ -17,6 +17,12 @@ migrate = Migrate(app, db)
 CORS(app)
 
 
+class Urls(db.Model):
+    id = db.Column("id", db.Integer, primary_key=True)
+    long_url = db.Column("long_url", db.String())
+    short_url = db.Column("short_url", db.String())
+
+
 @app.route('/', methods=['GET'])
 def home():
     return render_template('home.html', title="Home")
