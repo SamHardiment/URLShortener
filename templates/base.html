@@ -15,10 +15,10 @@
     <nav class="navbar navbar-light bg-light justify-content-between">
       <a class="navbar-brand" href="{{url_for('home')}}">Home</a>
       <form class="form-inline" action="#" method="POST">
-        <label for="urlInput">Shorten your URL!</label>
+        <label for="urlInput" class="mr-4">Shorten your URL!</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control mr-2"
           name="urlInput"
           id="urlInput"
           aria-describedby="urlInput"
@@ -29,6 +29,11 @@
       </form>
     </nav>
     <main>{% block content %} {% endblock %}</main>
-    <footer>&copy; Sam&Amir</footer>
+    <footer class="bg-light text-center text-lg-start">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2022 Copyright:
+        <a class="text-dark" href="{{url_for('home')}}">Sam&Amir</a>
+      </div>
+    </footer>
   </body>
 </html>
